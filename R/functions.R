@@ -1,3 +1,5 @@
+source("R/constants.R")
+
 #' preview
 #'
 #' @param df df
