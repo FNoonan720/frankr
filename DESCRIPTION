@@ -1,0 +1,17 @@
+Package: frankr
+Type: Package
+Title: Functions & constants that I use in all of my projects
+Version: 0.1.0
+Author: Frank Noonan
+Maintainer: Frank Noonan <fnoonan15@gmail.com>
+Description: See title
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+  magrittr,
+  httr,
+  rvest,
+  data.table,
+  ggplot2
+RoxygenNote: 7.2.3
