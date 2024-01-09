@@ -1,4 +1,6 @@
-#' preview
+#' @importFrom magrittr "%>%"
+
+#' @title preview
 #'
 #' @param df df
 #' @param n n
