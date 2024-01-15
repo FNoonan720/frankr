@@ -24,21 +24,20 @@ get_html_table_from_url <- function(url, idx=1) {
     rvest::html_table(fill=T) %>%
     .[[idx]] %>%
     as.data.frame %>%
-    return
+    return()
 }
 
 #' get_nba_com_table
 #'
 #' @param url url
-#' @param headers headers
 #' @param params params
 #' @param idx idx
 #'
 #' @return df
 #' @export
-get_nba_com_table <- function(url, headers, params, idx=1) {
+get_nba_com_table <- function(url, params, idx=1) {
   resultSet <- httr::content(
-    httr::GET(url = url, httr::add_headers(.headers=headers), query = params)) %>%
+    httr::GET(url = url, httr::add_headers(.headers=nba_com_headers), query = params)) %>%
     .[['resultSets']] %>%
     .[[idx]]
   df <- resultSet %>%
@@ -54,19 +53,18 @@ get_nba_com_table <- function(url, headers, params, idx=1) {
 #' get_pbp_stats_table
 #'
 #' @param url url
-#' @param headers headers
 #' @param params params
 #' @param single_row single_row
 #'
 #' @return df
 #' @export
-get_pbp_stats_table <- function(url, headers, params, single_row=F) {
+get_pbp_stats_table <- function(url, params, single_row=F) {
   content <- httr::content(
-    httr::GET(url = url, httr::add_headers(.headers=headers), query = params))
+    httr::GET(url = url, httr::add_headers(.headers=pbp_stats_headers), query = params))
   if(single_row) {
     content[['single_row_table_data']] %>%
       as.data.frame %>%
-      return
+      return()
   } else {
     if(content[['multi_row_table_data']] %>% is.null)
     {
@@ -78,7 +76,7 @@ get_pbp_stats_table <- function(url, headers, params, single_row=F) {
     data %>%
       data.table::rbindlist(fill=T) %>%
       as.data.frame %>%
-      return
+      return()
   }
 }
 
@@ -92,7 +90,7 @@ get_pbp_stats_table <- function(url, headers, params, single_row=F) {
 get_formula_from_model <- function(model, df_name) {
   formula <- model$coefficients["(Intercept)"]
   for(i in 1:length(model$coefficients[-1])) {
-    formula <- paste0(formula, " + ", model$coefficients[-1][i], " *", df_name,
+    formula <- paste0("\n", formula, " + ", model$coefficients[-1][i], " *", df_name,
                       "$", names(model$coefficients[-1])[i])
   }
   return(formula)
@@ -121,3 +119,6 @@ remaining_sample_avg <- function(entire_weight, entire_value, sample_weight, sam
 save_plot <- function(title) {
   return(ggplot2::ggsave(file = title, units = "in", dpi = 320, width = 10, height = 10))
 }
+
+## quiets concerns of R CMD check re: the var names that appear in pipelines
+utils::globalVariables(c(".", "setnames", "View"))

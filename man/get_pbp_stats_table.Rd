@@ -4,12 +4,10 @@
 \alias{get_pbp_stats_table}
 \title{get_pbp_stats_table}
 \usage{
-get_pbp_stats_table(url, headers, params, single_row = F)
+get_pbp_stats_table(url, params, single_row = F)
 }
 \arguments{
 \item{url}{url}
-
-\item{headers}{headers}
 
 \item{params}{params}
 

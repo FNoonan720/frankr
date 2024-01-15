@@ -4,12 +4,10 @@
 \alias{get_nba_com_table}
 \title{get_nba_com_table}
 \usage{
-get_nba_com_table(url, headers, params, idx = 1)
+get_nba_com_table(url, params, idx = 1)
 }
 \arguments{
 \item{url}{url}
-
-\item{headers}{headers}
 
 \item{params}{params}
 
