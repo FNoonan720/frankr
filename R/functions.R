@@ -90,7 +90,7 @@ get_pbp_stats_table <- function(url, params, single_row=F) {
 get_formula_from_model <- function(model, df_name) {
   formula <- model$coefficients["(Intercept)"]
   for(i in 1:length(model$coefficients[-1])) {
-    formula <- paste0("\n", formula, " + ", model$coefficients[-1][i], " *", df_name,
+    formula <- paste0(formula, " + ", model$coefficients[-1][i], "*", df_name,
                       "$", names(model$coefficients[-1])[i])
   }
   return(formula)
