@@ -1,4 +1,8 @@
 #' @importFrom magrittr "%>%"
+#' @importFrom data.table "rbindlist"
+#' @importFrom httr "GET" "content" "add_headers"
+#' @importFrom rvest "read_html" "html_nodes" "html_table"
+#' @importFrom ggplot2 "ggsave"
 
 #' @title preview
 #'
