@@ -32,21 +32,25 @@ get_html_table_from_url <- function(url, idx=1) {
 #' @param url url
 #' @param params params
 #' @param idx idx
+#' @param ignore_ranks ignore_ranks
 #'
 #' @return df
 #' @export
-get_nba_com_table <- function(url, params, idx=1) {
+get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
   resultSet <- httr::content(
     httr::GET(url = url, httr::add_headers(.headers=nba_com_headers), query = params)) %>%
     .[['resultSets']] %>%
     .[[idx]]
   df <- resultSet %>%
     .[['rowSet']] %>%
-    data.table::rbindlist %>%
+    data.table::rbindlist() %>%
     as.data.frame %>%
-    setnames(resultSet %>%
+    setNames(resultSet %>%
                .[['headers']] %>%
                unlist)
+  if(ignore_ranks) {
+    df <- df[, !grepl("_RANK", names(df))]
+  }
   return(df)
 }
 
@@ -121,4 +125,4 @@ save_plot <- function(title) {
 }
 
 ## quiets concerns of R CMD check re: the var names that appear in pipelines
-utils::globalVariables(c(".", "setnames", "View"))
+utils::globalVariables(c(".", "setNames", "View"))

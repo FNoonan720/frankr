@@ -4,7 +4,7 @@
 \alias{get_nba_com_table}
 \title{get_nba_com_table}
 \usage{
-get_nba_com_table(url, params, idx = 1)
+get_nba_com_table(url, params, idx = 1, ignore_ranks = F)
 }
 \arguments{
 \item{url}{url}
@@ -12,6 +12,8 @@ get_nba_com_table(url, params, idx = 1)
 \item{params}{params}
 
 \item{idx}{idx}
+
+\item{ignore_ranks}{ignore_ranks}
 }
 \value{
 df
