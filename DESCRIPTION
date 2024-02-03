@@ -11,7 +11,7 @@ LazyData: true
 Depends:
   magrittr,
   httr,
+  dplyr,
   rvest,
-  data.table,
-  ggplot2
+  data.table
 RoxygenNote: 7.3.1

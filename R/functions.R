@@ -1,8 +1,8 @@
 #' @importFrom magrittr "%>%"
-#' @importFrom data.table "rbindlist"
 #' @importFrom httr "GET" "content" "add_headers"
+#' @importFrom dplyr "filter" "arrange" "desc"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
-#' @importFrom ggplot2 "ggsave"
+#' @importFrom data.table "rbindlist"
 
 #' @title preview
 #'
@@ -23,9 +23,9 @@ preview <- function(df, n) {
 #' @return df
 #' @export
 get_html_table_from_url <- function(url, idx=1) {
-  rvest::read_html(url) %>%
-    rvest::html_nodes("table") %>%
-    rvest::html_table(fill=T) %>%
+  read_html(url) %>%
+    html_nodes("table") %>%
+    html_table(fill=T) %>%
     .[[idx]] %>%
     as.data.frame %>%
     return()
@@ -41,13 +41,12 @@ get_html_table_from_url <- function(url, idx=1) {
 #' @return df
 #' @export
 get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
-  resultSet <- httr::content(
-    httr::GET(url = url, httr::add_headers(.headers=nba_com_headers), query = params)) %>%
+  resultSet <- content(GET(url = url, add_headers(.headers=nba_com_headers), query = params)) %>%
     .[['resultSets']] %>%
     .[[idx]]
   df <- resultSet %>%
     .[['rowSet']] %>%
-    data.table::rbindlist() %>%
+    rbindlist %>%
     as.data.frame %>%
     setNames(resultSet %>%
                .[['headers']] %>%
@@ -67,22 +66,21 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
 #' @return df
 #' @export
 get_pbp_stats_table <- function(url, params, single_row=F) {
-  content <- httr::content(
-    httr::GET(url = url, httr::add_headers(.headers=pbp_stats_headers), query = params))
+  res <- content(GET(url = url, add_headers(.headers=pbp_stats_headers), query = params))
   if(single_row) {
-    content[['single_row_table_data']] %>%
+    res[['single_row_table_data']] %>%
       as.data.frame %>%
       return()
   } else {
-    if(content[['multi_row_table_data']] %>% is.null)
+    if(res[['multi_row_table_data']] %>% is.null)
     {
-      data <- content[['results']]
+      data <- res[['results']]
     }
     else {
-      data <- content[['multi_row_table_data']]
+      data <- res[['multi_row_table_data']]
     }
     data %>%
-      data.table::rbindlist(fill=T) %>%
+      rbindlist(fill=T) %>%
       as.data.frame %>%
       return()
   }
@@ -116,16 +114,6 @@ get_formula_from_model <- function(model, df_name) {
 remaining_sample_avg <- function(entire_weight, entire_value, sample_weight, sample_value) {
   return((entire_value - sample_weight / entire_weight * sample_value) /
            ( (entire_weight - sample_weight) / entire_weight) )
-}
-
-#' save_plot
-#'
-#' @param title title
-#'
-#' @return plot
-#' @export
-save_plot <- function(title) {
-  return(ggplot2::ggsave(file = title, units = "in", dpi = 320, width = 10, height = 10))
 }
 
 ## quiets concerns of R CMD check re: the var names that appear in pipelines
