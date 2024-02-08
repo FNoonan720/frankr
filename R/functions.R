@@ -10,7 +10,7 @@
 #' @param n n
 #'
 #' @export
-preview <- function(df, n) {
+preview <- function(df, n=3) {
   View(df[1:n,])
   View(df[(nrow(df)-(n-1)):nrow(df),])
 }
