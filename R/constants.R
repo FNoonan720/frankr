@@ -43,9 +43,12 @@ df_teams <- data.frame(
            paste0(logo_base_url,"portland-trail-blazers-logo-symbol.png"),  paste0(logo_base_url,"nba-sacramento-kings-logo.png"),
            paste0(logo_base_url,"san-antonio-spurs-logo-symbol.png"),       paste0(logo_base_url,"nba-toronto-raptors-logo-2020.png"),
            paste0(logo_base_url,"utah-jazz-logo-symbol.png"),               paste0(logo_base_url,"washington-wizards-logo-symbol.png")),
-COLOR = c("#E03A3E","#000000","#007A33","#00788C","#CE1141","#860038","#002B5E","#FEC524","#1D42BA","#FFC72C",
-          "#CE1141","#FDBB30","#1D428A","#552583","#5D76A9","#9A002A","#00471B","#0C2340","#85714D","#F58426",
-          "#007AC1","#0077C0","#006BB6","#E56020","#E03A3E","#5A2D81","#C4CED4","#CE1141","#002B5C","#002B5C"))
+COLOR_PRIMARY =    c("#E03A3E","#000000","#007A33","#00788C","#CE1141","#860038","#002B5E","#FEC524","#1D42BA","#FFC72C",
+                     "#CE1141","#FDBB30","#1D428A","#552583","#5D76A9","#9A002A","#00471B","#0C2340","#85714D","#F58426",
+                     "#007AC1","#0077C0","#006BB6","#E56020","#E03A3E","#5A2D81","#C4CED4","#CE1141","#002B5C","#002B5C"),
+COLOR_SECONDARY =  c("#26282A","#FFFFFF","#000000","#1D1160","#FFFFFF","#FDBB30","#00538C","#0E2240","#C8102E","#1D428A",
+                     "#000000","#002D62","#C8102E","#FDB927","#12173F","#F9A01B","#EEE1C6","#236192","#C8102E","#006BB6",
+                     "#EF3B24","#C4CED4","#ED174C","#1D1160","#000000","#63727A","#000000","#000000","#00471B","#E31837"))
 
 #' theme_colors
 #' @export
