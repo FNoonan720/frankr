@@ -42,7 +42,10 @@ df_teams <- data.frame(
            paste0(logo_base_url,"nba-philadelphia-76ers-logo.png"),         paste0(logo_base_url,"phoenix-suns-logo-symbol.png"),
            paste0(logo_base_url,"portland-trail-blazers-logo-symbol.png"),  paste0(logo_base_url,"nba-sacramento-kings-logo.png"),
            paste0(logo_base_url,"san-antonio-spurs-logo-symbol.png"),       paste0(logo_base_url,"nba-toronto-raptors-logo-2020.png"),
-           paste0(logo_base_url,"utah-jazz-logo-symbol.png"),               paste0(logo_base_url,"washington-wizards-logo-symbol.png")))
+           paste0(logo_base_url,"utah-jazz-logo-symbol.png"),               paste0(logo_base_url,"washington-wizards-logo-symbol.png")),
+COLOR = c("#E03A3E","#000000","#007A33","#00788C","#CE1141","#860038","#002B5E","#FEC524","#1D42BA","#FFC72C",
+          "#CE1141","#FDBB30","#1D428A","#552583","#5D76A9","#9A002A","#00471B","#0C2340","#85714D","#F58426",
+          "#007AC1","#0077C0","#006BB6","#E56020","#E03A3E","#5A2D81","#C4CED4","#CE1141","#002B5C","#002B5C"))
 
 #' theme_colors
 #' @export
