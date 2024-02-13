@@ -1,8 +1,11 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom httr "GET" "content" "add_headers"
+#' @importFrom plyr "round_any"
 #' @importFrom dplyr "filter" "arrange" "desc"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
 #' @importFrom data.table "rbindlist"
+#' @importFrom utils "View"
+#' @importFrom stats "setNames"
 
 #' @title preview
 #'
@@ -116,5 +119,21 @@ remaining_sample_avg <- function(entire_weight, entire_value, sample_weight, sam
            ( (entire_weight - sample_weight) / entire_weight) )
 }
 
+#' get_team_color
+#'
+#' @param team team
+#' @param color color
+#' @param secondary secondary
+#'
+#' @return color
+#' @export
+get_team_color <- function(team, color=df_teams$COLOR_PRIMARY[df_teams$ABV %in% team], secondary=F) {
+  if(secondary) {
+    return(df_teams$COLOR_SECONDARY[df_teams$ABV %in% team])
+  } else {
+    return(color)
+  }
+}
+
 ## quiets concerns of R CMD check re: the var names that appear in pipelines
-utils::globalVariables(c(".", "setNames", "View"))
+utils::globalVariables(c("."))

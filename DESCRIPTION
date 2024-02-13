@@ -11,6 +11,7 @@ LazyData: true
 Depends:
   magrittr,
   httr,
+  plyr,
   dplyr,
   rvest,
   data.table

@@ -5,7 +5,7 @@
 \alias{df_teams}
 \title{df_teams}
 \format{
-An object of class \code{data.frame} with 30 rows and 4 columns.
+An object of class \code{data.frame} with 30 rows and 6 columns.
 }
 \usage{
 df_teams
