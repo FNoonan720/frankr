@@ -4,7 +4,6 @@
 #' @importFrom dplyr "filter" "arrange" "desc"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
 #' @importFrom data.table "rbindlist"
-#' @importFrom utils "View"
 #' @importFrom stats "setNames"
 
 #' @title preview
@@ -13,7 +12,7 @@
 #' @param n n
 #'
 #' @export
-preview <- function(df, n=3) {
+preview <- function(df, n) {
   View(df[1:n,])
   View(df[(nrow(df)-(n-1)):nrow(df),])
 }
@@ -136,4 +135,4 @@ get_team_color <- function(team, color=df_teams$COLOR_PRIMARY[df_teams$ABV %in% 
 }
 
 ## quiets concerns of R CMD check re: the var names that appear in pipelines
-utils::globalVariables(c("."))
+utils::globalVariables(c(".", "View"))
