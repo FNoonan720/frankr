@@ -19,9 +19,9 @@ preview <- function(df, n=3) {
     .[[2]]
 
   View(df[1:n,],
-       paste0(df_name, "[1:", n, "]:"))
+       paste0("\n", df_name, "[1:", n, "]:"))
   View(df[(nrow(df)-(n-1)):nrow(df),],
-       paste0(df_name, "[", nrow(df)-(n-1), ":", nrow(df), "]:"))
+       paste0("\n", df_name, "[", nrow(df)-(n-1), ":", nrow(df), "]:"))
 }
 
 #' get_html_table_from_url
