@@ -13,8 +13,15 @@
 #'
 #' @export
 preview <- function(df, n=3) {
-  View(df[1:n,])
-  View(df[(nrow(df)-(n-1)):nrow(df),])
+  df_name <- sys.calls()[[length(sys.calls())-1]] %>%
+    as.character %>%
+    strsplit(split=' ') %>%
+    .[[2]]
+
+  View(df[1:n,],
+       paste0(df_name, "[1:", n, "]:"))
+  View(df[(nrow(df)-(n-1)):nrow(df),],
+       paste0(df_name, "[", nrow(df)-(n-1), ":", nrow(df), "]:"))
 }
 
 #' get_html_table_from_url
