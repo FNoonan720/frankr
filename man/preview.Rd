@@ -4,7 +4,7 @@
 \alias{preview}
 \title{preview}
 \usage{
-preview(df, n = 3)
+preview(df, n)
 }
 \arguments{
 \item{df}{df}
