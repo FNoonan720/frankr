@@ -34,6 +34,7 @@ df_teams <- data.frame(
   NAME = c("Hawks", "Nets", "Celtics", "Hornets", "Bulls", "Cavaliers", "Mavericks", "Nuggets", "Pistons", "Warriors",
            "Rockets", "Pacers", "Clippers", "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans", "Knicks",
            "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings", "Spurs", "Raptors", "Jazz", "Wizards"),
+  FULL_NAME = paste0(df_teams$CITY, " ", df_teams$NAME),
   CTG_NAME = c("Atlanta",       "Brooklyn", "Boston",       "Charlotte",  "Chicago",  "Cleveland",  "Dallas",       "Denver",     "Detroit",      "Golden State",
                "Houston",       "Indiana",  "LA Clippers",  "LA Lakers",  "Memphis",  "Miami",      "Milwaukee",    "Minnesota",  "New Orleans",  "New York",
                "Oklahoma City", "Orlando",  "Philadelphia", "Phoenix",    "Portland", "Sacramento", "San Antonio",  "Toronto",    "Utah",         "Washington"),
