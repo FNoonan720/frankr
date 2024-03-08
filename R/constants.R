@@ -34,7 +34,6 @@ df_teams <- data.frame(
   NAME = c("Hawks", "Nets", "Celtics", "Hornets", "Bulls", "Cavaliers", "Mavericks", "Nuggets", "Pistons", "Warriors",
            "Rockets", "Pacers", "Clippers", "Lakers", "Grizzlies", "Heat", "Bucks", "Timberwolves", "Pelicans", "Knicks",
            "Thunder", "Magic", "76ers", "Suns", "Trail Blazers", "Kings", "Spurs", "Raptors", "Jazz", "Wizards"),
-  FULL_NAME = paste0(df_teams$CITY, " ", df_teams$NAME),
   CTG_NAME = c("Atlanta",       "Brooklyn", "Boston",       "Charlotte",  "Chicago",  "Cleveland",  "Dallas",       "Denver",     "Detroit",      "Golden State",
                "Houston",       "Indiana",  "LA Clippers",  "LA Lakers",  "Memphis",  "Miami",      "Milwaukee",    "Minnesota",  "New Orleans",  "New York",
                "Oklahoma City", "Orlando",  "Philadelphia", "Phoenix",    "Portland", "Sacramento", "San Antonio",  "Toronto",    "Utah",         "Washington"),
@@ -58,7 +57,8 @@ COLOR_PRIMARY =    c("#E03A3E","#000000","#007A33","#00788C","#CE1141","#860038"
                      "#007AC1","#0077C0","#006BB6","#E56020","#E03A3E","#5A2D81","#C4CED4","#CE1141","#002B5C","#002B5C"),
 COLOR_SECONDARY =  c("#26282A","#FFFFFF","#000000","#1D1160","#FFFFFF","#FDBB30","#00538C","#0E2240","#C8102E","#1D428A",
                      "#000000","#002D62","#C8102E","#FDB927","#12173F","#F9A01B","#EEE1C6","#236192","#C8102E","#006BB6",
-                     "#EF3B24","#C4CED4","#ED174C","#1D1160","#000000","#63727A","#000000","#000000","#00471B","#E31837"))
+                     "#EF3B24","#C4CED4","#ED174C","#1D1160","#000000","#63727A","#000000","#000000","#00471B","#E31837")) %>%
+mutate(FULL_NAME = paste0(df_teams$CITY, " ", df_Teams$NAME))
 
 #' theme_colors
 #' @export
