@@ -59,6 +59,7 @@ COLOR_SECONDARY =  c("#26282A","#FFFFFF","#000000","#1D1160","#FFFFFF","#FDBB30"
                      "#000000","#002D62","#C8102E","#FDB927","#12173F","#F9A01B","#EEE1C6","#236192","#C8102E","#006BB6",
                      "#EF3B24","#C4CED4","#ED174C","#1D1160","#000000","#63727A","#000000","#000000","#00471B","#E31837"))
 df_teams$FULL_NAME <- paste0(df_teams$CITY, " ", df_teams$NAME)
+df_teams$FULL_NAME[df_teams$ABV == "LAC"] <- "LA Clippers"
 
 #' theme_colors
 #' @export
