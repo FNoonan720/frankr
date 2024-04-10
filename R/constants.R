@@ -12,6 +12,15 @@ nba_com_headers = c(common_headers, `Origin` = "https://www.nba.com", `Referer` 
 #' @export
 pbp_stats_headers = c(common_headers, `Origin` = "https://www.pbpstats.com", `Referer` = "https://www.pbpstats.com/")
 
+#' ctg_headers
+#' @export
+ctg_headers = c(common_headers, `cache-control` = "max-age=0", `referer` = "https://www.cleaningtheglass.com/", `sec-fetch-dest` = "document",
+                `sec-fetch-mode` = "navigate", `sec-fetch-site` = "same-origin", `sec-fetch-user` = "?1", `upgrade-insecure-requests` = "1")
+
+#' ctg_cookies
+#' @export
+ctg_cookies = c(`sessionid` = "zuhdgowpxjj50tfgfglzaepkm0tvsp5n")
+
 #' logo_base_url
 #' @export
 logo_base_url <- "https://loodibee.com/wp-content/uploads/"
