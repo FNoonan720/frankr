@@ -25,6 +25,10 @@ ctg_cookies = c(`sessionid` = "zuhdgowpxjj50tfgfglzaepkm0tvsp5n")
 #' @export
 logo_base_url <- "https://loodibee.com/wp-content/uploads/"
 
+#' square_logo_base_url
+#' @export
+square_logo_base_url <- "https://raw.githubusercontent.com/Henryjean/data/refs/heads/main/square_nba_logos/"
+
 #' eastern_conf
 #' @export
 eastern_conf <- c("ATL", "BKN", "BOS", "CHA", "CHI", "CLE", "DET", "IND", "MIA", "MIL", "NYK", "ORL", "PHI", "TOR", "WAS")
@@ -81,6 +85,7 @@ COLOR_CUSTOM =     c("#E03A3E","#000000","#007A33","#00788C","#CE1141","#B3004A"
 df_teams$CONF <- sapply(df_teams$ABV, function(ABV) { ifelse(is.element(ABV, eastern_conf), "E", "W") })
 df_teams$FULL_NAME <- paste0(df_teams$CITY, " ", df_teams$NAME)
 df_teams$FULL_NAME[df_teams$ABV == "LAC"] <- "LA Clippers"
+df_teams$SQUARE_LOGO <- paste0(square_logo_base_url, df_teams$ABV, ".svg")
 
 #' theme_colors
 #' @export
