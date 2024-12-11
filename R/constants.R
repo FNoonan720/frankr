@@ -87,10 +87,6 @@ df_teams$FULL_NAME <- paste0(df_teams$CITY, " ", df_teams$NAME)
 df_teams$FULL_NAME[df_teams$ABV == "LAC"] <- "LA Clippers"
 df_teams$SQUARE_LOGO <- paste0(square_logo_base_url, df_teams$ABV, ".svg")
 
-#' df_players
-#' @export
-df_players <- read.csv("../player_crosswalk.csv")
-
 #' theme_colors
 #' @export
 theme_colors <- c(`text` = "gray88", `text_axis` = "gray77", `text_red` = "#FFC9CB", `text_green` = "#BFFFD0", `background_panel` = "gray28", `background_plot` = "gray22",
