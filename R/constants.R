@@ -89,7 +89,7 @@ df_teams$SQUARE_LOGO <- paste0(square_logo_base_url, df_teams$ABV, ".svg")
 
 #' df_players
 #' @export
-df_players <- read.csv("player_id_crosswalk.csv")
+df_players <- read.csv("../player_id_crosswalk.csv")
 
 #' theme_colors
 #' @export
