@@ -24,6 +24,24 @@ preview <- function(df, n=3) {
        paste0("\n", df_name, "[", nrow(df)-(n-1), ":", nrow(df), "]:"))
 }
 
+#' @title generate_season_strings
+#'
+#' @param start_year start_year
+#' @param end_year end_year
+#'
+#' @return seasons
+#' @export
+generate_season_strings <- function(start_year, end_year) {
+  years <-
+    start_year:(end_year - 1)
+  sprintf(
+    "%d-%02d",
+    years,
+   (years + 1) %% 100
+  ) %>%
+  return()
+}
+
 #' get_html_table_from_url
 #'
 #' @param url url
