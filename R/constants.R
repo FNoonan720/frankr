@@ -21,6 +21,11 @@ ctg_headers = c(common_headers, `cache-control` = "max-age=0", `referer` = "http
 #' @export
 ctg_cookies = c(`sessionid` = "zuhdgowpxjj50tfgfglzaepkm0tvsp5n")
 
+#' nba_com_season_types
+#' @export
+nba_com_season_types <-
+  c("Pre Season", "Regular Season", "IST", "PlayIn", "Playoffs")
+
 #' logo_base_url
 #' @export
 logo_base_url <- "https://loodibee.com/wp-content/uploads/"
