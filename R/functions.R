@@ -1,10 +1,10 @@
-#' @importFrom magrittr "%>%"
+#' @import magrittr
 #' @importFrom httr "GET" "content" "add_headers"
 #' @importFrom plyr "round_any"
-#' @importFrom dplyr "filter" "arrange" "desc" "glimpse"
-#' @importFrom rvest "read_html" "html_nodes" "html_table"
+#' @import dplyr
+#' @import rvest
 #' @importFrom data.table "rbindlist"
-#' @importFrom stats "setNames"
+#' @import stats
 
 
 #' @title theme_frankr
