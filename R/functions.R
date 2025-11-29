@@ -1,7 +1,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom httr "GET" "content" "add_headers"
 #' @importFrom plyr "round_any"
-#' @importFrom dplyr "filter" "arrange" "desc"
+#' @importFrom dplyr "filter" "arrange" "desc" "glimpse"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
 #' @importFrom data.table "rbindlist"
 #' @importFrom stats "setNames"
