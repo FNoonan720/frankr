@@ -2,18 +2,33 @@
 % Please edit documentation in R/functions.R
 \name{get_formula_from_model}
 \alias{get_formula_from_model}
-\title{get_formula_from_model}
+\title{Extract Formula from Model}
 \usage{
 get_formula_from_model(model, df_name)
 }
 \arguments{
-\item{model}{model}
+\item{model}{A fitted model object with coefficients (e.g., from lm(), glm())}
 
-\item{df_name}{df_name}
+\item{df_name}{Character. The name of the data frame used in the model (for variable reference)}
 }
 \value{
-formula
+Character string representing the mathematical formula of the model
 }
 \description{
-get_formula_from_model
+Creates a readable formula string from a fitted model object.
+This function constructs a mathematical expression from model coefficients.
+}
+\details{
+This function iterates through model coefficients to build a string formula
+representing the model. It starts with the intercept and adds each coefficient term
+with its associated variable name.
+}
+\examples{
+# Create a simple linear model
+model <- lm(mpg ~ wt + hp, data = mtcars)
+
+# Get the formula as a string
+formula_str <- get_formula_from_model(model, "mtcars")
+print(formula_str)
+
 }

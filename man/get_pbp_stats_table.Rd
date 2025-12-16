@@ -2,20 +2,42 @@
 % Please edit documentation in R/functions.R
 \name{get_pbp_stats_table}
 \alias{get_pbp_stats_table}
-\title{get_pbp_stats_table}
+\title{Get PBPStats.com Table Data}
 \usage{
 get_pbp_stats_table(url, params, single_row = F)
 }
 \arguments{
-\item{url}{url}
+\item{url}{Character. The PBPStats.com API endpoint URL}
 
-\item{params}{params}
+\item{params}{Named list. Query parameters for the API request}
 
-\item{single_row}{single_row}
+\item{single_row}{Logical. Whether to return single-row table data (default is FALSE)}
 }
 \value{
-df
+A data frame containing the requested table data
 }
 \description{
-get_pbp_stats_table
+Retrieves data from PBPStats.com by sending a request with specified parameters.
+This function handles both single-row and multi-row table data formats.
+}
+\details{
+This function sends a GET request to PBPStats.com with the provided URL and parameters.
+It handles different response formats depending on whether single-row or multi-row data is expected.
+The function uses predefined PBPStats.com headers to mimic legitimate browser requests.
+}
+\section{Important Legal and Ethical Notice}{
+
+This function is provided for educational purposes. Users are responsible for ensuring
+their use complies with the Terms of Service of target websites, applicable laws, and ethical
+guidelines. Please respect robots.txt files, rate limits, and website terms of service.
+Consider using official APIs when available as they are more reliable and ethically sound.
+}
+
+\examples{
+\dontrun{
+# Example usage (not run to avoid actual API calls)
+params <- list(team_id = 1610612744, season = "2023-24")
+df <- get_pbp_stats_table("https://www.pbpstats.com/data/team/shots", params)
+}
+
 }

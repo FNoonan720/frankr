@@ -18,8 +18,11 @@ ctg_headers = c(common_headers, `cache-control` = "max-age=0", `referer` = "http
                 `sec-fetch-mode` = "navigate", `sec-fetch-site` = "same-origin", `sec-fetch-user` = "?1", `upgrade-insecure-requests` = "1")
 
 #' ctg_cookies
+#' @description A template for cleaningtheglass.com cookies.
+#' This is a placeholder - you will need to provide your own session ID
+#' by replacing 'YOUR_SESSION_ID' with your actual session ID from the website
 #' @export
-ctg_cookies = c(`sessionid` = "zuhdgowpxjj50tfgfglzaepkm0tvsp5n")
+ctg_cookies = c(`sessionid` = "YOUR_SESSION_ID")
 
 #' nba_com_season_types
 #' @export

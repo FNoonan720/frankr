@@ -2,15 +2,29 @@
 % Please edit documentation in R/functions.R
 \name{preview}
 \alias{preview}
-\title{preview}
+\title{Preview function}
 \usage{
 preview(df, n = 3)
 }
 \arguments{
-\item{df}{df}
+\item{df}{A data frame to preview}
 
-\item{n}{n}
+\item{n}{Number of rows to show from beginning and end (default is 3)}
 }
 \description{
-preview
+Quickly view the first and last n rows of a data frame in RStudio's viewer.
+This is useful for getting a quick glimpse of large datasets.
+}
+\details{
+This function opens two views in RStudio's Viewer: one showing the first n rows
+and another showing the last n rows of the provided data frame. The function captures
+the variable name dynamically using system calls.
+}
+\examples{
+# Using with mtcars dataset
+preview(mtcars)  # Shows first 3 and last 3 rows
+
+# Using with 5 rows
+# preview(mtcars, n = 5)
+
 }

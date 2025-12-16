@@ -11,6 +11,8 @@ An object of class \code{character} of length 1.
 ctg_cookies
 }
 \description{
-ctg_cookies
+A template for cleaningtheglass.com cookies.
+This is a placeholder - you will need to provide your own session ID
+by replacing 'YOUR_SESSION_ID' with your actual session ID from the website
 }
 \keyword{datasets}

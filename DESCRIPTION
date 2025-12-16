@@ -1,11 +1,16 @@
 Package: frankr
 Type: Package
-Title: Functions & constants that I use in all of my projects
-Version: 0.2.0
+Title: Personal Collection of R Functions and Constants for Data Science Workflows
+Version: 1.0.0
+Date: 2025-12-15
 Authors@R: person("Frank", "Noonan", email = "fnoonan15@gmail.com", role = c("aut", "cre"))
 Maintainer: Frank Noonan <fnoonan15@gmail.com>
-Description: Functions & constants that I use in all of my projects.
+Description: A collection of functions and constants that facilitate common data science workflows,
+  particularly focused on sports analytics and web scraping. Includes utilities for NBA data
+  collection, custom visualization themes, and general purpose helper functions.
 License: MIT + file LICENSE
+URL: https://github.com/FNoonan720/frankr
+BugReports: https://github.com/FNoonan720/frankr/issues
 Encoding: UTF-8
 LazyData: TRUE
 Depends: magrittr, dplyr, rvest

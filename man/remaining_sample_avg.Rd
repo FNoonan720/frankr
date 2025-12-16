@@ -2,22 +2,35 @@
 % Please edit documentation in R/functions.R
 \name{remaining_sample_avg}
 \alias{remaining_sample_avg}
-\title{remaining_sample_avg}
+\title{Calculate Average of Remaining Sample}
 \usage{
 remaining_sample_avg(entire_weight, entire_value, sample_weight, sample_value)
 }
 \arguments{
-\item{entire_weight}{entire_weight}
+\item{entire_weight}{Numeric. The total weight of the complete dataset}
 
-\item{entire_value}{entire_value}
+\item{entire_value}{Numeric. The total value of the complete dataset}
 
-\item{sample_weight}{sample_weight}
+\item{sample_weight}{Numeric. The weight of the sample to remove}
 
-\item{sample_value}{sample_value}
+\item{sample_value}{Numeric. The total value of the sample to remove}
 }
 \value{
-avg
+Numeric. The average value of the remaining sample after subtraction
 }
 \description{
-remaining_sample_avg
+Computes the average value of the remaining portion after removing a weighted sample.
+This is useful for calculating how removing certain data points affects the overall average.
+}
+\details{
+This function calculates what the average would be if you removed a specific weighted
+sample from the total dataset. It's commonly used in statistics when analyzing the impact of
+subsets on overall calculations.
+}
+\examples{
+# If you have a dataset with total weight 100 and total value 500,
+# and you want to know the average after removing a sample of weight 20 with value 120
+remaining_avg <- remaining_sample_avg(100, 500, 20, 120)
+print(remaining_avg)  # Should output 4.75
+
 }

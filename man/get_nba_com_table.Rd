@@ -2,22 +2,49 @@
 % Please edit documentation in R/functions.R
 \name{get_nba_com_table}
 \alias{get_nba_com_table}
-\title{get_nba_com_table}
+\title{Get NBA.com Table Data}
 \usage{
 get_nba_com_table(url, params, idx = 1, ignore_ranks = F)
 }
 \arguments{
-\item{url}{url}
+\item{url}{Character. The NBA.com API endpoint URL}
 
-\item{params}{params}
+\item{params}{Named list. Query parameters for the API request}
 
-\item{idx}{idx}
+\item{idx}{Numeric. Index of the result set to return (default is 1)}
 
-\item{ignore_ranks}{ignore_ranks}
+\item{ignore_ranks}{Logical. Whether to remove columns containing "_RANK" (default is FALSE)}
 }
 \value{
-df
+A data frame containing the requested table data
 }
 \description{
-get_nba_com_table
+Retrieves data from NBA.com's stats API by sending a request with specified parameters.
+This function is designed to work with the NBA.com stats endpoint and returns tabular data.
+}
+\details{
+This function sends a GET request to the NBA.com API with the provided URL and parameters.
+It expects a JSON response with a "resultSets" element, from which it extracts the specified
+result set and converts it to a data frame.
+
+The function uses predefined NBA.com headers to mimic legitimate browser requests. Note that
+while this function doesn't properly handle all API endpoints (it works for most, which is why
+I have left it as-is), it provides a good starting point for many common NBA.com API requests.
+}
+\section{Important Legal and Ethical Notice}{
+
+This function is provided for educational purposes. Users are responsible for ensuring
+their use complies with the Terms of Service of target websites, applicable laws, and ethical
+guidelines. Please respect robots.txt files, rate limits, and website terms of service.
+Consider using official APIs when available as they are more reliable and ethically sound.
+The NBA has an official API that may be more appropriate for production use.
+}
+
+\examples{
+\dontrun{
+# Example usage (not run to avoid actual API calls)
+params <- list(MeasureType = "Base", PerMode = "PerGame", Season = "2023-24")
+df <- get_nba_com_table("https://stats.nba.com/stats/leaguedashplayerstats", params)
+}
+
 }

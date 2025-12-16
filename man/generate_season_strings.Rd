@@ -2,18 +2,28 @@
 % Please edit documentation in R/functions.R
 \name{generate_season_strings}
 \alias{generate_season_strings}
-\title{generate_season_strings}
+\title{Generate Season Strings}
 \usage{
 generate_season_strings(start_year, end_year)
 }
 \arguments{
-\item{start_year}{start_year}
+\item{start_year}{Numeric. The starting year (e.g., 2020)}
 
-\item{end_year}{end_year}
+\item{end_year}{Numeric. The ending year (e.g., 2024)}
 }
 \value{
-seasons
+A character vector of season strings in the format "YYYY-YY"
 }
 \description{
-generate_season_strings
+Generate NBA-style season strings in the format "YYYY-YY" for a given range of years.
+}
+\examples{
+# Generate seasons from 2020 to 2024
+generate_season_strings(2020, 2024)
+# Returns: "2020-21" "2021-22" "2022-23" "2023-24"
+
+# Generate a single season
+generate_season_strings(2023, 2024)
+# Returns: "2023-24"
+
 }

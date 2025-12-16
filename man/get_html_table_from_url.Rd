@@ -2,18 +2,43 @@
 % Please edit documentation in R/functions.R
 \name{get_html_table_from_url}
 \alias{get_html_table_from_url}
-\title{get_html_table_from_url}
+\title{Extract HTML Table from URL}
 \usage{
 get_html_table_from_url(url, idx = 1)
 }
 \arguments{
-\item{url}{url}
+\item{url}{Character. The URL of the webpage containing the table}
 
-\item{idx}{idx}
+\item{idx}{Numeric. The index of the table to extract if multiple tables exist on the page (default is 1)}
 }
 \value{
-df
+A data frame containing the extracted table data
 }
 \description{
-get_html_table_from_url
+Extracts a table from a webpage by parsing the HTML content.
+This is a general-purpose function for web scraping tabular data.
+}
+\details{
+This function uses rvest package functions to read HTML from the given URL,
+find all table elements, and extract the specified table. It handles basic table formatting
+with the fill parameter to accommodate irregular table structures.
+}
+\section{Important Legal and Ethical Notice}{
+
+This function is provided for educational purposes. Users are responsible for ensuring
+their use complies with the Terms of Service of target websites, applicable laws, and ethical
+guidelines. Please respect robots.txt files, rate limits, and website terms of service.
+Consider using official APIs when available as they are more reliable and ethically sound.
+}
+
+\examples{
+\dontrun{
+# Example usage (not run to avoid actual web requests)
+# Extract first table from a webpage
+df <- get_html_table_from_url("https://example.com/data-table.html")
+
+# Extract the second table from a webpage
+df <- get_html_table_from_url("https://example.com/data-table.html", idx = 2)
+}
+
 }

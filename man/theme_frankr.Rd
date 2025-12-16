@@ -2,10 +2,36 @@
 % Please edit documentation in R/functions.R
 \name{theme_frankr}
 \alias{theme_frankr}
-\title{theme_frankr}
+\title{Custom ggplot2 theme}
 \usage{
 theme_frankr()
 }
 \description{
-theme_frankr
+Creates a custom dark-themed ggplot2 theme with Montserrat font and
+consistent styling. This theme is optimized for presentations and reports with
+a dark background aesthetic.
+}
+\details{
+This function requires the following packages to be installed:
+\itemize{
+  \item ggplot2
+  \item ggtext
+  \item showtext
+  \item sysfonts
+}
+}
+\examples{
+\dontrun{
+library(ggplot2)
+
+# Basic usage
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Car Weight vs MPG",
+       subtitle = "Example using frankr theme")
+
+# Apply the custom theme
+p + theme_frankr()
+}
+
 }

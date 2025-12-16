@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_team_color}
 \alias{get_team_color}
-\title{get_team_color}
+\title{Get NBA Team Color}
 \usage{
 get_team_color(
   team,
@@ -11,15 +11,29 @@ get_team_color(
 )
 }
 \arguments{
-\item{team}{team}
+\item{team}{Character. The 3-letter team abbreviation (e.g., "GSW", "LAL")}
 
-\item{color}{color}
+\item{color}{Character. The primary color for the team (default is automatically retrieved)}
 
-\item{secondary}{secondary}
+\item{secondary}{Logical. Whether to return the secondary color instead of primary (default is FALSE)}
 }
 \value{
-color
+Character string representing the hex color code for the team color
 }
 \description{
-get_team_color
+Retrieves the primary or secondary color for a given NBA team.
+}
+\details{
+This function looks up team colors from the df_teams data frame.
+It provides easy access to official NBA team colors for visualization purposes.
+}
+\examples{
+# Get Golden State Warriors primary color
+gsw_primary <- get_team_color("GSW")
+print(gsw_primary)  # Should output "#FFC72C"
+
+# Get Golden State Warriors secondary color
+gsw_secondary <- get_team_color("GSW", secondary = TRUE)
+print(gsw_secondary)  # Should output "#1D428A"
+
 }
