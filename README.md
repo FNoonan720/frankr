@@ -6,7 +6,7 @@
 
 ```r
 # Install from GitHub
-remotes::install_github("fnoonan15/frankr")
+remotes::install_github("FNoonan720/frankr")
 ```
 
 ## Features
