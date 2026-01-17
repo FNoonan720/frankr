@@ -4,7 +4,14 @@
 \alias{get_pbp_stats_table}
 \title{Get PBPStats.com Table Data}
 \usage{
-get_pbp_stats_table(url, params, single_row = F)
+get_pbp_stats_table(
+  url,
+  params,
+  single_row = F,
+  throttle_rate = 1/6,
+  max_retries = 3,
+  backoff_sec = 5
+)
 }
 \arguments{
 \item{url}{Character. The PBPStats.com API endpoint URL}
@@ -12,6 +19,12 @@ get_pbp_stats_table(url, params, single_row = F)
 \item{params}{Named list. Query parameters for the API request}
 
 \item{single_row}{Logical. Whether to return single-row table data (default is FALSE)}
+
+\item{throttle_rate}{Numeric. Rate limit in requests per second (default is 1/6)}
+
+\item{max_retries}{Numeric. Maximum number of retry attempts on transient errors (default is 3)}
+
+\item{backoff_sec}{Numeric. Seconds to wait between retries (default is 5)}
 }
 \value{
 A data frame containing the requested table data
@@ -23,7 +36,8 @@ This function handles both single-row and multi-row table data formats.
 \details{
 This function sends a GET request to PBPStats.com with the provided URL and parameters.
 It handles different response formats depending on whether single-row or multi-row data is expected.
-The function uses predefined PBPStats.com headers to mimic legitimate browser requests.
+The function includes built-in rate limiting and automatic retries on transient errors.
+It uses predefined PBPStats.com headers to mimic legitimate browser requests.
 }
 \section{Important Legal and Ethical Notice}{
 

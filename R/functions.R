@@ -1,4 +1,4 @@
-#' @importFrom httr "GET" "content" "add_headers"
+#' @importFrom httr2 "request" "req_url_query" "req_headers" "req_throttle" "req_retry" "req_perform" "resp_body_json" "resp_status"
 #' @importFrom plyr "round_any"
 #' @importFrom dplyr "filter" "arrange" "desc"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
@@ -200,20 +200,22 @@ get_html_table_from_url <- function(url, idx=1) {
 #' @description Retrieves data from NBA.com's stats API by sending a request with specified parameters.
 #' This function is designed to work with the NBA.com stats endpoint and returns tabular data.
 #'
-#' @param url Character. The NBA.com API endpoint URL
+#' @param endpoint Character. The NBA.com API endpoint (e.g., "leaguedashplayerstats")
 #' @param params Named list. Query parameters for the API request
 #' @param idx Numeric. Index of the result set to return (default is 1)
 #' @param ignore_ranks Logical. Whether to remove columns containing "_RANK" (default is FALSE)
+#' @param throttle_rate Numeric. Rate limit in requests per second (default is 1/6, i.e., one request per 6 seconds)
+#' @param max_retries Numeric. Maximum number of retry attempts on transient errors (default is 3)
+#' @param backoff_sec Numeric. Seconds to wait between retries (default is 5)
 #'
 #' @return A data frame containing the requested table data
 #'
-#' @details This function sends a GET request to the NBA.com API with the provided URL and parameters.
+#' @details This function sends a GET request to the NBA.com API with the provided endpoint and parameters.
 #' It expects a JSON response with a "resultSets" element, from which it extracts the specified
 #' result set and converts it to a data frame.
 #'
-#' The function uses predefined NBA.com headers to mimic legitimate browser requests. Note that
-#' while this function doesn't properly handle all API endpoints (it works for most, which is why
-#' I have left it as-is), it provides a good starting point for many common NBA.com API requests.
+#' The function includes built-in rate limiting and automatic retries on transient errors
+#' (HTTP 429, 503, 504). It uses predefined NBA.com headers to mimic legitimate browser requests.
 #'
 #' @section Important Legal and Ethical Notice:
 #' This function is provided for educational purposes. Users are responsible for ensuring
@@ -226,19 +228,24 @@ get_html_table_from_url <- function(url, idx=1) {
 #' \dontrun{
 #' # Example usage (not run to avoid actual API calls)
 #' params <- list(MeasureType = "Base", PerMode = "PerGame", Season = "2023-24")
-#' df <- get_nba_com_table("https://stats.nba.com/stats/leaguedashplayerstats", params)
+#' df <- get_nba_com_table("leaguedashplayerstats", params)
 #' }
 #'
 #' @export
-get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
+get_nba_com_table <- function(endpoint, params, idx=1, ignore_ranks=F,
+                               throttle_rate=1/6, max_retries=3, backoff_sec=5) {
   resultSet <-
-    content(
-      GET(
-        url = url,
-        add_headers(.headers=nba_com_headers),
-        query = params
-      )
+    request(paste0("https://stats.nba.com/stats/", endpoint)) |>
+    req_url_query(!!!params) |>
+    req_headers(!!!nba_com_headers) |>
+    req_throttle(throttle_rate) |>
+    req_retry(
+      max_tries = max_retries,
+      is_transient = \(resp) resp_status(resp) %in% c(429, 503, 504),
+      backoff = ~backoff_sec
     ) |>
+    req_perform() |>
+    resp_body_json() |>
     _[['resultSets']] |>
     _[[idx]]
 
@@ -256,10 +263,10 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
              unlist())
 
   if(ignore_ranks) {
-    df <- df[, !grepl("_RANK", names(df))]
+    df[, !grepl("_RANK", names(df))]
+  } else {
+    df
   }
-
-  return(df)
 }
 
 #' Get PBPStats.com Table Data
@@ -270,12 +277,16 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
 #' @param url Character. The PBPStats.com API endpoint URL
 #' @param params Named list. Query parameters for the API request
 #' @param single_row Logical. Whether to return single-row table data (default is FALSE)
+#' @param throttle_rate Numeric. Rate limit in requests per second (default is 1/6)
+#' @param max_retries Numeric. Maximum number of retry attempts on transient errors (default is 3)
+#' @param backoff_sec Numeric. Seconds to wait between retries (default is 5)
 #'
 #' @return A data frame containing the requested table data
 #'
 #' @details This function sends a GET request to PBPStats.com with the provided URL and parameters.
 #' It handles different response formats depending on whether single-row or multi-row data is expected.
-#' The function uses predefined PBPStats.com headers to mimic legitimate browser requests.
+#' The function includes built-in rate limiting and automatic retries on transient errors.
+#' It uses predefined PBPStats.com headers to mimic legitimate browser requests.
 #'
 #' @section Important Legal and Ethical Notice:
 #' This function is provided for educational purposes. Users are responsible for ensuring
@@ -291,8 +302,21 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
 #' }
 #'
 #' @export
-get_pbp_stats_table <- function(url, params, single_row=F) {
-  res <- content(GET(url = url, add_headers(.headers=pbp_stats_headers), query = params))
+get_pbp_stats_table <- function(url, params, single_row=F,
+                                 throttle_rate=1/6, max_retries=3, backoff_sec=5) {
+  res <-
+    request(url) |>
+    req_url_query(!!!params) |>
+    req_headers(!!!pbp_stats_headers) |>
+    req_throttle(throttle_rate) |>
+    req_retry(
+      max_tries = max_retries,
+      is_transient = \(resp) resp_status(resp) %in% c(429, 503, 504),
+      backoff = ~backoff_sec
+    ) |>
+    req_perform() |>
+    resp_body_json()
+
   if(single_row) {
     res[['single_row_table_data']] |>
       as.data.frame()
