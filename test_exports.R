@@ -169,7 +169,7 @@ if (!has_network) {
   })
 
   test("get_nba_com_table for player stats", {
-    url <- "https://stats.nba.com/stats/leaguedashplayerstats"
+    endpoint <- "leaguedashplayerstats"
     params <- list(
       College = "",
       Conference = "",
@@ -208,8 +208,8 @@ if (!has_network) {
       VsDivision = "",
       Weight = ""
     )
-    Sys.sleep(1)  # Rate limiting
-    result <- get_nba_com_table(url, params)
+    # Built-in throttling handles rate limiting
+    result <- get_nba_com_table(endpoint, params)
     stopifnot(is.data.frame(result))
     stopifnot(nrow(result) > 0)
     stopifnot("PLAYER_NAME" %in% names(result))
@@ -222,7 +222,7 @@ if (!has_network) {
       SeasonType = "Regular Season",
       Type = "Player"
     )
-    Sys.sleep(1)  # Rate limiting
+    # Built-in throttling handles rate limiting
     result <- get_pbp_stats_table(url, params)
     stopifnot(is.data.frame(result))
     stopifnot(nrow(result) > 0)

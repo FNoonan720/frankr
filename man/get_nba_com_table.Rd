@@ -4,16 +4,30 @@
 \alias{get_nba_com_table}
 \title{Get NBA.com Table Data}
 \usage{
-get_nba_com_table(url, params, idx = 1, ignore_ranks = F)
+get_nba_com_table(
+  endpoint,
+  params,
+  idx = 1,
+  ignore_ranks = F,
+  throttle_rate = 1/6,
+  max_retries = 3,
+  backoff_sec = 5
+)
 }
 \arguments{
-\item{url}{Character. The NBA.com API endpoint URL}
+\item{endpoint}{Character. The NBA.com API endpoint (e.g., "leaguedashplayerstats")}
 
 \item{params}{Named list. Query parameters for the API request}
 
 \item{idx}{Numeric. Index of the result set to return (default is 1)}
 
 \item{ignore_ranks}{Logical. Whether to remove columns containing "_RANK" (default is FALSE)}
+
+\item{throttle_rate}{Numeric. Rate limit in requests per second (default is 1/6, i.e., one request per 6 seconds)}
+
+\item{max_retries}{Numeric. Maximum number of retry attempts on transient errors (default is 3)}
+
+\item{backoff_sec}{Numeric. Seconds to wait between retries (default is 5)}
 }
 \value{
 A data frame containing the requested table data
@@ -23,13 +37,12 @@ Retrieves data from NBA.com's stats API by sending a request with specified para
 This function is designed to work with the NBA.com stats endpoint and returns tabular data.
 }
 \details{
-This function sends a GET request to the NBA.com API with the provided URL and parameters.
+This function sends a GET request to the NBA.com API with the provided endpoint and parameters.
 It expects a JSON response with a "resultSets" element, from which it extracts the specified
 result set and converts it to a data frame.
 
-The function uses predefined NBA.com headers to mimic legitimate browser requests. Note that
-while this function doesn't properly handle all API endpoints (it works for most, which is why
-I have left it as-is), it provides a good starting point for many common NBA.com API requests.
+The function includes built-in rate limiting and automatic retries on transient errors
+(HTTP 429, 503, 504). It uses predefined NBA.com headers to mimic legitimate browser requests.
 }
 \section{Important Legal and Ethical Notice}{
 
@@ -44,7 +57,7 @@ The NBA has an official API that may be more appropriate for production use.
 \dontrun{
 # Example usage (not run to avoid actual API calls)
 params <- list(MeasureType = "Base", PerMode = "PerGame", Season = "2023-24")
-df <- get_nba_com_table("https://stats.nba.com/stats/leaguedashplayerstats", params)
+df <- get_nba_com_table("leaguedashplayerstats", params)
 }
 
 }
