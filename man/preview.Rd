@@ -21,10 +21,12 @@ and another showing the last n rows of the provided data frame. The function cap
 the variable name dynamically using system calls.
 }
 \examples{
+\dontrun{
 # Using with mtcars dataset
 preview(mtcars)  # Shows first 3 and last 3 rows
 
 # Using with 5 rows
-# preview(mtcars, n = 5)
+preview(mtcars, n = 5)
+}
 
 }

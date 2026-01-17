@@ -107,11 +107,13 @@ theme_frankr <- function() {
 #' the variable name dynamically using system calls.
 #'
 #' @examples
+#' \dontrun{
 #' # Using with mtcars dataset
 #' preview(mtcars)  # Shows first 3 and last 3 rows
 #'
 #' # Using with 5 rows
-#' # preview(mtcars, n = 5)
+#' preview(mtcars, n = 5)
+#' }
 #'
 #' @export
 preview <- function(df, n=3) {
@@ -232,19 +234,34 @@ get_html_table_from_url <- function(url, idx=1) {
 #'
 #' @export
 get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
-  resultSet <- content(GET(url = url, add_headers(.headers=nba_com_headers), query = params)) %>%
+  resultSet <-
+    content(
+      GET(
+        url = url,
+        add_headers(.headers=nba_com_headers),
+        query = params
+      )
+    ) %>%
     .[['resultSets']] %>%
     .[[idx]]
-  df <- resultSet %>%
-    .[['rowSet']] %>%
+
+  rowSet <-
+    lapply(resultSet[["rowSet"]], function(row) {
+      lapply(row, function(x) if (length(x) == 0) NA else x)
+    })
+
+  df <-
+    rowSet %>%
     rbindlist %>%
     as.data.frame %>%
     setNames(resultSet %>%
-               .[['headers']] %>%
-               unlist)
+             .[['headers']] %>%
+             unlist)
+
   if(ignore_ranks) {
     df <- df[, !grepl("_RANK", names(df))]
   }
+
   return(df)
 }
 

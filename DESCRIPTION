@@ -4,6 +4,7 @@ Title: Personal Collection of R Functions and Constants for Data Science Workflo
 Version: 1.0.0
 Date: 2025-12-15
 Authors@R: person("Frank", "Noonan", email = "fnoonan15@gmail.com", role = c("aut", "cre"))
+Author: Frank Noonan [aut, cre]
 Maintainer: Frank Noonan <fnoonan15@gmail.com>
 Description: A collection of functions and constants that facilitate common data science workflows,
   particularly focused on sports analytics and web scraping. Includes utilities for NBA data
@@ -12,7 +13,6 @@ License: MIT + file LICENSE
 URL: https://github.com/FNoonan720/frankr
 BugReports: https://github.com/FNoonan720/frankr/issues
 Encoding: UTF-8
-LazyData: TRUE
 Depends: magrittr, dplyr, rvest
 Imports: httr, plyr, data.table
 Suggests: ggplot2, ggtext, showtext, sysfonts
