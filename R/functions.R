@@ -1,4 +1,3 @@
-#' @importFrom magrittr "%>%"
 #' @importFrom httr "GET" "content" "add_headers"
 #' @importFrom plyr "round_any"
 #' @importFrom dplyr "filter" "arrange" "desc"
@@ -117,10 +116,10 @@ theme_frankr <- function() {
 #'
 #' @export
 preview <- function(df, n=3) {
-  df_name <- sys.calls()[[length(sys.calls())-1]] %>%
-    as.character %>%
-    strsplit(split=' ') %>%
-    .[[2]]
+  df_name <- sys.calls()[[length(sys.calls())-1]] |>
+    as.character() |>
+    strsplit(split=' ') |>
+    _[[2]]
 
   View(df[1:n,],
        paste0("\n", df_name, "[1:", n, "]:"))
@@ -154,8 +153,7 @@ generate_season_strings <- function(start_year, end_year) {
     "%d-%02d",
     years,
    (years + 1) %% 100
-  ) %>%
-  return()
+  )
 }
 
 #' Extract HTML Table from URL
@@ -190,12 +188,11 @@ generate_season_strings <- function(start_year, end_year) {
 #'
 #' @export
 get_html_table_from_url <- function(url, idx=1) {
-  read_html(url) %>%
-    html_nodes("table") %>%
-    html_table(fill=T) %>%
-    .[[idx]] %>%
-    as.data.frame %>%
-    return()
+  read_html(url) |>
+    html_nodes("table") |>
+    html_table(fill=T) |>
+    _[[idx]] |>
+    as.data.frame()
 }
 
 #' Get NBA.com Table Data
@@ -241,9 +238,9 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
         add_headers(.headers=nba_com_headers),
         query = params
       )
-    ) %>%
-    .[['resultSets']] %>%
-    .[[idx]]
+    ) |>
+    _[['resultSets']] |>
+    _[[idx]]
 
   rowSet <-
     lapply(resultSet[["rowSet"]], function(row) {
@@ -251,12 +248,12 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
     })
 
   df <-
-    rowSet %>%
-    rbindlist %>%
-    as.data.frame %>%
-    setNames(resultSet %>%
-             .[['headers']] %>%
-             unlist)
+    rowSet |>
+    rbindlist() |>
+    as.data.frame() |>
+    setNames(resultSet |>
+             _[['headers']] |>
+             unlist())
 
   if(ignore_ranks) {
     df <- df[, !grepl("_RANK", names(df))]
@@ -297,21 +294,17 @@ get_nba_com_table <- function(url, params, idx=1, ignore_ranks=F) {
 get_pbp_stats_table <- function(url, params, single_row=F) {
   res <- content(GET(url = url, add_headers(.headers=pbp_stats_headers), query = params))
   if(single_row) {
-    res[['single_row_table_data']] %>%
-      as.data.frame %>%
-      return()
+    res[['single_row_table_data']] |>
+      as.data.frame()
   } else {
-    if(res[['multi_row_table_data']] %>% is.null)
-    {
+    if(is.null(res[['multi_row_table_data']])) {
       data <- res[['results']]
-    }
-    else {
+    } else {
       data <- res[['multi_row_table_data']]
     }
-    data %>%
-      rbindlist(fill=T) %>%
-      as.data.frame %>%
-      return()
+    data |>
+      rbindlist(fill=T) |>
+      as.data.frame()
   }
 }
 
@@ -407,4 +400,4 @@ get_team_color <- function(team, color=df_teams$COLOR_PRIMARY[df_teams$ABV %in% 
 }
 
 ## quiets concerns of R CMD check re: the var names that appear in pipelines
-utils::globalVariables(c(".", "View", ".pt"))
+utils::globalVariables(c("View", ".pt"))
