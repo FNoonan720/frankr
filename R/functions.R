@@ -202,17 +202,23 @@ get_html_table_from_url <- function(url, idx=1) {
 #'
 #' @param endpoint Character. The NBA.com API endpoint (e.g., "leaguedashplayerstats")
 #' @param params Named list. Query parameters for the API request
-#' @param idx Numeric. Index of the result set to return (default is 1)
+#' @param idx Numeric. Index of the result set to return when req_idx is TRUE (default is 1)
 #' @param ignore_ranks Logical. Whether to remove columns containing "_RANK" (default is FALSE)
 #' @param throttle_rate Numeric. Rate limit in requests per second (default is 1/6, i.e., one request per 6 seconds)
 #' @param max_retries Numeric. Maximum number of retry attempts on transient errors (default is 3)
 #' @param backoff_sec Numeric. Seconds to wait between retries (default is 5)
+#' @param req_idx Logical. Whether to index into resultSets with idx (default is FALSE)
+#' @param multiple_header_rows Logical. Whether the endpoint returns multiple header rows (default is FALSE)
 #'
 #' @return A data frame containing the requested table data
 #'
 #' @details This function sends a GET request to the NBA.com API with the provided endpoint and parameters.
 #' It expects a JSON response with a "resultSets" element, from which it extracts the specified
 #' result set and converts it to a data frame.
+#'
+#' Different endpoints have different response structures. Use req_idx=TRUE for endpoints that
+#' return multiple result sets that need indexing. Use multiple_header_rows=TRUE for endpoints
+#' like "leaguedashplayershotlocations" that have nested header structures.
 #'
 #' The function includes built-in rate limiting and automatic retries on transient errors
 #' (HTTP 429, 503, 504). It uses predefined NBA.com headers to mimic legitimate browser requests.
@@ -229,11 +235,18 @@ get_html_table_from_url <- function(url, idx=1) {
 #' # Example usage (not run to avoid actual API calls)
 #' params <- list(MeasureType = "Base", PerMode = "PerGame", Season = "2023-24")
 #' df <- get_nba_com_table("leaguedashplayerstats", params)
+#'
+#' # For endpoints requiring indexing into resultSets
+#' df <- get_nba_com_table("leaguedashplayerbiostats", params, req_idx = TRUE)
+#'
+#' # For endpoints with multiple header rows
+#' df <- get_nba_com_table("leaguedashplayershotlocations", params, multiple_header_rows = TRUE)
 #' }
 #'
 #' @export
 get_nba_com_table <- function(endpoint, params, idx=1, ignore_ranks=F,
-                               throttle_rate=1/6, max_retries=3, backoff_sec=5) {
+                               throttle_rate=1/6, max_retries=3, backoff_sec=5,
+                               req_idx=F, multiple_header_rows=F) {
   resultSet <-
     request(paste0("https://stats.nba.com/stats/", endpoint)) |>
     req_url_query(!!!params) |>
@@ -246,21 +259,36 @@ get_nba_com_table <- function(endpoint, params, idx=1, ignore_ranks=F,
     ) |>
     req_perform() |>
     resp_body_json() |>
-    _[['resultSets']] |>
-    _[[idx]]
+    _[['resultSets']]
+
+  if(req_idx) {
+    resultSet <- resultSet[[idx]]
+  }
 
   rowSet <-
     lapply(resultSet[["rowSet"]], function(row) {
       lapply(row, function(x) if (length(x) == 0) NA else x)
     })
 
+  if(multiple_header_rows) {
+    headers <-
+      resultSet |>
+      _[['headers']] |>
+      _[[2]] |>
+      _[['columnNames']] |>
+      unlist()
+  } else {
+    headers <-
+      resultSet |>
+      _[['headers']] |>
+      unlist()
+  }
+
   df <-
     rowSet |>
     rbindlist() |>
     as.data.frame() |>
-    setNames(resultSet |>
-             _[['headers']] |>
-             unlist())
+    setNames(headers)
 
   if(ignore_ranks) {
     df[, !grepl("_RANK", names(df))]
