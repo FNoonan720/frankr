@@ -13,7 +13,6 @@ License: MIT + file LICENSE
 URL: https://github.com/FNoonan720/frankr
 BugReports: https://github.com/FNoonan720/frankr/issues
 Encoding: UTF-8
-Depends: dplyr, rvest
-Imports: httr2, plyr, data.table
+Imports: dplyr, rvest, httr2, plyr, data.table
 Suggests: ggplot2, ggtext, showtext, sysfonts
 RoxygenNote: 7.3.3

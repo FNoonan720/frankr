@@ -11,7 +11,9 @@ get_nba_com_table(
   ignore_ranks = F,
   throttle_rate = 1/6,
   max_retries = 3,
-  backoff_sec = 5
+  backoff_sec = 5,
+  req_idx = F,
+  multiple_header_rows = F
 )
 }
 \arguments{
@@ -19,7 +21,7 @@ get_nba_com_table(
 
 \item{params}{Named list. Query parameters for the API request}
 
-\item{idx}{Numeric. Index of the result set to return (default is 1)}
+\item{idx}{Numeric. Index of the result set to return when req_idx is TRUE (default is 1)}
 
 \item{ignore_ranks}{Logical. Whether to remove columns containing "_RANK" (default is FALSE)}
 
@@ -28,6 +30,10 @@ get_nba_com_table(
 \item{max_retries}{Numeric. Maximum number of retry attempts on transient errors (default is 3)}
 
 \item{backoff_sec}{Numeric. Seconds to wait between retries (default is 5)}
+
+\item{req_idx}{Logical. Whether to index into resultSets with idx (default is FALSE)}
+
+\item{multiple_header_rows}{Logical. Whether the endpoint returns multiple header rows (default is FALSE)}
 }
 \value{
 A data frame containing the requested table data
@@ -40,6 +46,10 @@ This function is designed to work with the NBA.com stats endpoint and returns ta
 This function sends a GET request to the NBA.com API with the provided endpoint and parameters.
 It expects a JSON response with a "resultSets" element, from which it extracts the specified
 result set and converts it to a data frame.
+
+Different endpoints have different response structures. Use req_idx=TRUE for endpoints that
+return multiple result sets that need indexing. Use multiple_header_rows=TRUE for endpoints
+like "leaguedashplayershotlocations" that have nested header structures.
 
 The function includes built-in rate limiting and automatic retries on transient errors
 (HTTP 429, 503, 504). It uses predefined NBA.com headers to mimic legitimate browser requests.
@@ -58,6 +68,12 @@ The NBA has an official API that may be more appropriate for production use.
 # Example usage (not run to avoid actual API calls)
 params <- list(MeasureType = "Base", PerMode = "PerGame", Season = "2023-24")
 df <- get_nba_com_table("leaguedashplayerstats", params)
+
+# For endpoints requiring indexing into resultSets
+df <- get_nba_com_table("leaguedashplayerbiostats", params, req_idx = TRUE)
+
+# For endpoints with multiple header rows
+df <- get_nba_com_table("leaguedashplayershotlocations", params, multiple_header_rows = TRUE)
 }
 
 }
