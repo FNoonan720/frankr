@@ -1,5 +1,4 @@
 #' @importFrom httr2 "request" "req_url_query" "req_headers" "req_throttle" "req_retry" "req_perform" "resp_body_json" "resp_status"
-#' @importFrom plyr "round_any"
 #' @importFrom dplyr "filter" "arrange" "desc"
 #' @importFrom rvest "read_html" "html_nodes" "html_table"
 #' @importFrom data.table "rbindlist"
